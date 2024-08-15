@@ -3,16 +3,10 @@
 	"version": "1.0.0",
 	"main": "app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"test:staged": "npm test -- --findRelatedTests",
-		"format": "prettier --write \"**/src/*.js\"",
+		"test": "jest",
+		"test:staged": "jest --findRelatedTests",
+		"format": "prettier --write \"src/**/*.js\"",
 		"prepare": "husky install"
-	},
-	"lint-staged": {
-		"*.js": [
-			"npm test:staged",
-			"npm format"
-		]
 	},
 	"keywords": [],
 	"author": "",
@@ -21,6 +15,7 @@
 	"devDependencies": {
 		"globals": "^15.9.0",
 		"husky": "^9.1.4",
+		"jest": "^29.7.0",
 		"lint-staged": "^15.2.9",
 		"prettier": "3.3.3"
 	}
