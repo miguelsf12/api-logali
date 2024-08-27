@@ -5,14 +5,7 @@
   "scripts": {
     "start": "nodemon ./src/app.js localhost 3000",
     "test": "jest --verbose --watch --config=jest.config.js",
-    "test:staged": "jest --findRelatedTests --config=jest.config.js",
-    "format": "prettier --write \"src/**/*.js\"",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx lint-staged"
-    }
+    "format": "prettier --write \"src/**/*.js\""
   },
   "keywords": [],
   "author": "",
@@ -20,9 +13,7 @@
   "description": "",
   "devDependencies": {
     "globals": "^15.9.0",
-    "husky": "^9.1.4",
     "jest": "^29.7.0",
-    "lint-staged": "^15.2.9",
     "prettier": "3.3.3"
   },
   "dependencies": {
