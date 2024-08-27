@@ -1,3 +1,0 @@
-{
-  "*.js": ["npm run test:staged", "prettier --write", "git add"]
-}
