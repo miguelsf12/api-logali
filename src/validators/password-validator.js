@@ -5,7 +5,7 @@ const passwordHasher = async (password) => {
   const schema = new passwordValidator()
   schema
     .is()
-    .min(8)
+    .min(6)
     .is()
     .max(20)
     .has()
