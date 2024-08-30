@@ -1,8 +1,8 @@
 const { MissingParamError } = require("../../errors/missing-param-error")
 const { InvalidParamError } = require("../../errors/invalid-param-error")
 const checkMissingParams = require("../../validators/check-missing-params")
-const signupInvalidParams = require("../../validators/signup-invalid-params")
-const passwordHasher = require("../../validators/password-validator")
+const signupInvalidParams = require("../../validators/signup/signup-invalid-params")
+const passwordHasher = require("../../validators/signup/signup-password-validator")
 const cpfValidator = require("../../validators/cpf-validator")
 const emailValidator = require("../../validators/email-validator")
 
