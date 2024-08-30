@@ -1,7 +1,7 @@
 const { MissingParamError } = require("../../errors/missing-param-error")
 const { InvalidParamError } = require("../../errors/invalid-param-error")
 const checkMissingParams = require("../../validators/check-missing-params")
-const checkInvalidParams = require("../../validators/check-invalid-params")
+const signupInvalidParams = require("../../validators/signup-invalid-params")
 const passwordHasher = require("../../validators/password-validator")
 const cpfValidator = require("../../validators/cpf-validator")
 const emailValidator = require("../../validators/email-validator")
@@ -38,7 +38,7 @@ describe("Sign Up Controller", () => {
 
     const userMock = { email: "teste@teste.com", cpf: "11122233344" }
 
-    await expect(checkInvalidParams(userMock)).rejects.toThrow(
+    await expect(signupInvalidParams(userMock)).rejects.toThrow(
       InvalidParamError
     )
   })
@@ -51,7 +51,7 @@ describe("Sign Up Controller", () => {
 
     const userMock = { email: "outro@teste.com", cpf: "12345678900" }
 
-    await expect(checkInvalidParams(userMock)).rejects.toThrow(
+    await expect(signupInvalidParams(userMock)).rejects.toThrow(
       InvalidParamError
     )
   })
@@ -62,7 +62,7 @@ describe("Sign Up Controller", () => {
 
     const userMock = { email: "novo@teste.com", cpf: "98765432100" }
 
-    await expect(checkInvalidParams(userMock)).resolves.not.toThrow()
+    await expect(signupInvalidParams(userMock)).resolves.not.toThrow()
   })
 
   test("Deve lançar InvalidParamError se a senha não for válida", async () => {
@@ -102,6 +102,3 @@ describe("Sign Up Controller", () => {
     )
   })
 })
-// expect(() => {
-//   checkMissingParams(userReq, userMock)
-// }).toThrow(MissingParamError)
