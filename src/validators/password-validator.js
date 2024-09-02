@@ -1,4 +1,4 @@
-const InvalidParamError = require("../../errors/invalid-param-error")
+const InvalidParamError = require("../errors/invalid-param-error")
 const passwordValidator = require("password-validator")
 
 const passwordHasher = async (password) => {
