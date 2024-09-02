@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.static("public"))
 
 // Rotas
-app.use("/auth", authRoutes)
+app.use("/user/auth", authRoutes)
 
 // app.listen(3000, () => {
 //   console.log("Servidor rodando na porta 3000")
