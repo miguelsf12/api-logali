@@ -86,7 +86,7 @@ module.exports = class userController {
 
       await checkPassword(user.password, userDb.password)
 
-      await createUserToken(user, req, res)
+      createUserToken(userDb, req, res)
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
