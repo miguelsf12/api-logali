@@ -1,10 +1,10 @@
-const auth = require("../../middlewares/auth")
+const checkAuth = require("../../middlewares/checkAuth")
 const providerController = require("../controllers/providerController")
 
 const router = require("express").Router()
 
-router.post("/addservice", auth, providerController.addService)
-router.post("/editservice/:id", auth, providerController.editService)
-router.delete("/removeservice/:id", auth, providerController.removeService)
+router.post("/addservice", checkAuth, providerController.addService)
+router.post("/editservice/:id", checkAuth, providerController.editService)
+router.delete("/removeservice/:id", checkAuth, providerController.removeService)
 
 module.exports = router
