@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken")
 const getToken = require("../helpers/get-token")
 const UnauthorizedError = require("../errors/unauthorized-error")
 
-const auth = (req, res, next) => {
+const checkAuth = (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).json(new UnauthorizedError())
   }
@@ -22,4 +22,4 @@ const auth = (req, res, next) => {
   }
 }
 
-module.exports = auth
+module.exports = checkAuth
