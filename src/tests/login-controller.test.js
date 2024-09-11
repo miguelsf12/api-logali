@@ -1,9 +1,9 @@
-const MissingParamError = require("../../errors/missing-param-error")
-const InvalidParamError = require("../../errors/invalid-param-error")
-const checkMissingParams = require("../../validators/check-missing-params")
-const loginInvalidParams = require("../../validators/login/login-invalid-params")
-const User = require("../models/user")
-const checkPassword = require("../../helpers/check-password")
+const MissingParamError = require("../errors/missing-param-error")
+const InvalidParamError = require("../errors/invalid-param-error")
+const checkMissingParams = require("../validators/check-missing-params")
+const loginInvalidParams = require("../validators/login/login-invalid-params")
+const User = require("../users/models/user")
+const checkPassword = require("../helpers/check-password")
 
 describe("Login Controller", () => {
   beforeEach(() => {

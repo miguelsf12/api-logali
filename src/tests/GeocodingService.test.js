@@ -1,4 +1,4 @@
-const GeocodingService = require("../GeocodingService")
+const GeocodingService = require("../services/GeocodingService")
 
 // Mock da função fetch
 global.fetch = jest.fn(() =>
