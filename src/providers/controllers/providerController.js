@@ -14,11 +14,18 @@ module.exports = class providerController {
 
       const address = await geocodingService.getCordinates(location)
 
+      // Formato de localização com endereço e coordenadas
+      const geoLocation = {
+        address: address.address, // Endereço fornecido pelo usuário
+        type: "Point",
+        coordinates: [address.latitude, address.longitude], // longitude, latitude
+      }
+
       const providerServices = new Service({
         name,
         description,
         category,
-        location: address,
+        location: geoLocation,
         provider: user,
       })
 
@@ -39,7 +46,7 @@ module.exports = class providerController {
         description,
         category,
       }
-      
+
       const serviceId = req.params.id
       const providerService = await Service.findById(serviceId)
 
@@ -56,7 +63,14 @@ module.exports = class providerController {
       if (location) {
         const geocodingService = new GeocodingService(process.env.key)
         const address = await geocodingService.getCordinates(location)
-        providerService.location = address
+
+        const geoLocation = {
+          address: address.address, // Endereço fornecido pelo usuário
+          type: "Point",
+          coordinates: [address.latitude, address.longitude], // longitude, latitude
+        }
+
+        providerService.location = geoLocation
       }
 
       await providerService.save()
