@@ -6,7 +6,7 @@ const passwordHasher = require("../validators/password-validator")
 const cpfValidator = require("../validators/cpf-validator")
 const emailValidator = require("../validators/email-validator")
 
-const User = require("../users/models/user")
+const User = require("../auth/models/user")
 
 describe("Sign Up Controller", () => {
   beforeEach(() => {

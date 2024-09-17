@@ -1,5 +1,5 @@
 const InvalidParamError = require("../../errors/invalid-param-error")
-const User = require("../../users/models/user")
+const User = require("../../auth/models/user")
 
 const signupInvalidParams = async (user) => {
   const { email, cpf } = user
