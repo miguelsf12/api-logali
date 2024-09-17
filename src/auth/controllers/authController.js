@@ -10,19 +10,21 @@ const loginInvalidParams = require("../../validators/login/login-invalid-params"
 const cpfFormat = require("../../helpers/cpf-format")
 const checkPassword = require("../../helpers/check-password")
 const createUserToken = require("../../helpers/create-user-token")
+const GeocodingService = require("../../services/GeocodingService")
 
 module.exports = class userController {
   static async register(req, res) {
     // Resgate da requisição
-    const { name, email, cpf, password } = req.body
+    const { name, email, cpf, password, address } = req.body
 
     try {
       // Usuario comparador
       const userMock = {
-        name,
-        email,
-        cpf,
-        password,
+        name: "",
+        email: "",
+        cpf: "",
+        password: "",
+        address: "",
       }
 
       const user = {
@@ -30,6 +32,7 @@ module.exports = class userController {
         email,
         cpf: cpfFormat(cpf),
         password,
+        address,
       }
 
       checkMissingParams(user, userMock)
@@ -40,12 +43,22 @@ module.exports = class userController {
 
       const ph = await bcrypt.hash(user.password, 12)
 
+      const geocodingService = new GeocodingService(process.env.key)
+      const userAddress = await geocodingService.getCordinates(address)
+
+      const geoLocation = {
+        address: userAddress.address, // Endereço fornecido pelo usuário
+        type: "Point",
+        coordinates: [userAddress.latitude, userAddress.longitude], // longitude, latitude
+      }
+
       // Criar usuário
       const userReady = new User({
         name,
         email,
         cpf: user.cpf,
         password: ph,
+        address: geoLocation,
       })
 
       const newUser = await userReady.save()
