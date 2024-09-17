@@ -16,14 +16,24 @@ const ServiceSchema = new Schema({
     required: true,
   },
   location: {
-    type: Object,
-    required: true,
+    address: { type: String, required: true }, // Mantém o endereço
+    type: {
+      type: String,
+      enum: ["Point"], // 'Point' é necessário para o MongoDB entender o tipo de dado geoespacial
+      required: true,
+    },
+    coordinates: {
+      type: [Number], // Array: [longitude, latitude]
+      required: true,
+    },
   },
   provider: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
+
+ServiceSchema.index({ location: "2dsphere" })
 
 const Service = mongoose.model("Service", ServiceSchema)
 
