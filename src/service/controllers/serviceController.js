@@ -7,7 +7,7 @@ module.exports = class serviceController {
   static async getAllServices(req, res) {
     const services = await Service.find()
 
-    res.json(services)
+    res.status(200).json(services)
   }
 
   static async getServicesFiltered(req, res) {
@@ -35,7 +35,7 @@ module.exports = class serviceController {
         const locationFilters = {
           lat: parseFloat(lastLocation.latitude),
           lng: parseFloat(lastLocation.longitude),
-          radius: parseFloat(radius), // Raio vai ser transformado em metros no serviceFilter
+          radius: parseFloat(radius),
         }
 
         // Instância do ServiceFilter para filtro por localização
@@ -50,7 +50,7 @@ module.exports = class serviceController {
 
       console.log(lastLocation)
 
-      res.json(filteredServices)
+      res.status(200).json(filteredServices)
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
@@ -76,8 +76,8 @@ module.exports = class serviceController {
           return {
             start_address: leg.start_address,
             end_address: leg.end_address,
-            total_distance: leg.distance.text, // Ex: "21.2 km"
-            total_duration: leg.duration.text, // Ex: "28 mins"
+            total_distance: leg.distance.text,
+            total_duration: leg.duration.text,
             overview_polyline: route.overview_polyline,
           }
         })
@@ -85,7 +85,7 @@ module.exports = class serviceController {
 
       console.log(routes)
 
-      res.json(routes)
+      res.status(200).json(routes)
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
