@@ -1,6 +1,7 @@
 const getToken = require("../../helpers/get-token")
 const getUserByToken = require("../../helpers/get-user-by-token")
 const GeocodingService = require("../../services/GeocodingService")
+const prohibitMoreServices = require("../../validators/prohibit-more-services")
 const Service = require("../models/Service")
 
 module.exports = class providerController {
@@ -11,8 +12,26 @@ module.exports = class providerController {
       const { name, description, category, location } = req.body
 
       const geocodingService = new GeocodingService(process.env.key)
+      var provider = {
+        _id: {
+          $oid: "66d5fd4d93abe83ec1bcc836",
+        },
+        name: "Miguel Santos",
+        email: "teste@teste.com",
+        cpf: "157.033.776-41",
+        __v: 0,
+        telephone: "(31) 998459630",
+        address: {
+          address:
+            "R. Portugal, 28 - Bairro Recanto Verde, Esmeraldas - MG, 32807-334, Brazil",
+          latitude: -19.8235456,
+          longitude: -44.1575547,
+        },
+      }
 
       const address = await geocodingService.getCordinates(location)
+
+      await prohibitMoreServices(user)
 
       // Formato de localização com endereço e coordenadas
       const geoLocation = {
@@ -20,7 +39,7 @@ module.exports = class providerController {
         type: "Point",
         coordinates: [address.latitude, address.longitude], // longitude, latitude
       }
-
+      // await pro
       const providerServices = new Service({
         name,
         description,
