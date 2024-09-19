@@ -50,7 +50,7 @@ module.exports = class providerController {
 
       const newProviderServices = await providerServices.save()
 
-      res.status(200).json(newProviderServices)
+      res.status(201).json(newProviderServices)
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
