@@ -5,6 +5,19 @@
     "description": "**Bem-vindo à documentação da API Logali**.\n\nA API Logali foi projetada para conectar usuários a serviços de acordo com sua localização, facilitando a busca por provedores próximos e a gestão de serviços de forma eficiente.\n\n### Funcionalidades principais:\n- **Autenticação de Usuários**: Registro e login utilizando JWT.\n- **Geolocalização**: Permite a busca de serviços próximos com base na localização atual do usuário.\n- **Cadastro e Gerenciamento de Serviços**: Provedores podem cadastrar, editar e gerenciar os serviços que serão oferecidos aos clientes.\n- **Filtragem de Serviços**: Pesquisa por nome, categoria e proximidade.\n- **Rotas e Distâncias**: Exibe trajetos e calcula distâncias usando integração com as APIs do Google (Directions, Places, etc.).\n\n### Público-Alvo:\n- A API é voltada tanto para **usuários** que procuram serviços quanto para **provedores** que desejam oferecer seus serviços de forma eficiente e localizada.\n\n### Estrutura:\n- A API segue o padrão **REST**, com endpoints bem definidos para autenticação, cadastro de serviços, busca e filtragem.\n- Todas as respostas são padronizadas em formato **JSON** para garantir compatibilidade e fácil integração com outras aplicações.",
     "version": "1.0.0"
   },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Autenticação JWT. O token deve ser enviado no cabeçalho Authorization como: Bearer {token}"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
   "paths": {
     "/user/auth/register": {
       "post": {
@@ -188,6 +201,11 @@
         "summary": "Cadastro de serviços",
         "description": "Rota responsável por cadastrar um serviço fornecido pelo usuário.",
         "tags": ["provider"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -309,6 +327,11 @@
         "summary": "Editar serviço",
         "description": "Rota responsável por editar algum campo específico do serviço",
         "tags": ["provider"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -439,6 +462,11 @@
         "summary": "Remover serviço",
         "description": "Rota responsável por remover um serviço.",
         "tags": ["provider"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Serviço deletado com sucesso.",
@@ -554,6 +582,11 @@
         "summary": "Editar usuário",
         "description": "Rota responsável por editar as configurações do usuário.",
         "tags": ["client"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -633,6 +666,11 @@
         "summary": "Enviar localização",
         "description": "Rota responsável por enviar a localização atual do usuário.",
         "tags": ["client"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -778,6 +816,11 @@
         "summary": "Resgatar serviços com base em filtros",
         "description": "Rota responsável por resgatar serviços cadastrados com base em filtros como: nome, categoria e raio de distância.",
         "tags": ["service"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "query",
