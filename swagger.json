@@ -714,6 +714,66 @@
         }
       }
     },
+    "/user/client/get-user-profile": {
+      "post": {
+        "summary": "Resgatar usuário",
+        "description": "Rota responsável por resgatar usuário.",
+        "tags": ["client"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": { "type": "string", "example": "66ec78d6..." },
+                    "name": {
+                      "type": "string",
+                      "example": "John Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "johndoe@example.com"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "example": "123.456.789-00"
+                    },
+                    "address": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "Rua Exemplo, 123"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": ["Point"],
+                          "example": "Point"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          },
+                          "example": [-46.633309, -23.55052]
+                        }
+                      }
+                    },
+                    "__v": { "type": "number", "example": 0 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/service/get-all-services": {
       "get": {
         "summary": "Resgatar serviços",
