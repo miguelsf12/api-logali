@@ -8,6 +8,18 @@ const UnauthorizedError = require("../../errors/unauthorized-error")
 const Service = require("../../providers/models/Service")
 
 module.exports = class clientController {
+  static async getUserProfile(req, res) {
+    try {
+      const token = getToken(req)
+
+      const user = await getUserByToken(token)
+
+      res.status(200).json(user)
+    } catch (error) {
+      res.status(400).json({ message: error.message })
+    }
+  }
+
   static async edit(req, res) {
     try {
       const userId = req.params.id
