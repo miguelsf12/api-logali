@@ -1,4 +1,4 @@
-const User = require("../../auth/models/user")
+const User = require("../../auth/models/User")
 const getUserByToken = require("../../helpers/get-user-by-token")
 const getToken = require("../../helpers/get-token")
 const MissingParamError = require("../../errors/missing-param-error")

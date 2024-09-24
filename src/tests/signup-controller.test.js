@@ -6,7 +6,7 @@ const passwordHasher = require("../validators/password-validator")
 const cpfValidator = require("../validators/cpf-validator")
 const emailValidator = require("../validators/email-validator")
 
-const User = require("../auth/models/user")
+const User = require("../auth/models/User")
 
 describe("Sign Up Controller", () => {
   beforeEach(() => {
@@ -38,9 +38,7 @@ describe("Sign Up Controller", () => {
 
     const userMock = { email: "teste@teste.com", cpf: "11122233344" }
 
-    await expect(signupInvalidParams(userMock)).rejects.toThrow(
-      InvalidParamError
-    )
+    await expect(signupInvalidParams(userMock)).rejects.toThrow(InvalidParamError)
   })
 
   test("Deve lançar InvalidParamError se o cpf já existir no banco de dados", async () => {
@@ -51,9 +49,7 @@ describe("Sign Up Controller", () => {
 
     const userMock = { email: "outro@teste.com", cpf: "12345678900" }
 
-    await expect(signupInvalidParams(userMock)).rejects.toThrow(
-      InvalidParamError
-    )
+    await expect(signupInvalidParams(userMock)).rejects.toThrow(InvalidParamError)
   })
 
   test("Não deve lançar erro se o email e cpf forem novos", async () => {
@@ -73,9 +69,7 @@ describe("Sign Up Controller", () => {
       password: "tenha",
     }
 
-    await expect(passwordHasher(userMock.password)).rejects.toThrow(
-      InvalidParamError
-    )
+    await expect(passwordHasher(userMock.password)).rejects.toThrow(InvalidParamError)
   })
 
   test("Deve lançar InvalidParamError se o cpf não for válido", async () => {
@@ -97,8 +91,6 @@ describe("Sign Up Controller", () => {
       password: "tenha",
     }
 
-    await expect(emailValidator(userMock.email)).rejects.toThrow(
-      InvalidParamError
-    )
+    await expect(emailValidator(userMock.email)).rejects.toThrow(InvalidParamError)
   })
 })

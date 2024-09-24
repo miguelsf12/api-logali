@@ -1,5 +1,5 @@
 const InvalidParamError = require("../../errors/invalid-param-error")
-const User = require("../../auth/models/user")
+const User = require("../../auth/models/User")
 const validator = require("validator")
 
 const loginInvalidParams = async (identifier) => {
