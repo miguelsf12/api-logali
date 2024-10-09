@@ -15,7 +15,8 @@ const GeocodingService = require("../../services/GeocodingService")
 module.exports = class userController {
   static async register(req, res) {
     // Resgate da requisição
-    const { name, email, cpf, password, address } = req.body
+    // const { name, email, cpf, password, address } = req.body
+    const { name, email, cpf, password, address } = req.body.formData
 
     try {
       // Usuario comparador
@@ -64,7 +65,7 @@ module.exports = class userController {
       const newUser = await userReady.save()
       res.status(201).json(newUser)
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message, status: "400" })
     }
   }
 
