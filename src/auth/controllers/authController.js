@@ -70,8 +70,8 @@ module.exports = class userController {
   }
 
   static async login(req, res) {
-    const { password } = req.body
-    let { identifier } = req.body
+    const { password } = req.body.formData
+    let { identifier } = req.body.formData
 
     try {
       const userMock = {
@@ -102,7 +102,28 @@ module.exports = class userController {
 
       createUserToken(userDb, req, res)
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message, status: "400" })
+    }
+  }
+
+  static async checkAuth(req, res) {
+    try {
+      const token = req.headers["authorization"]
+
+      if (!token) {
+        return res.status(401).json({ message: "Token não fornecido." })
+      }
+
+      const decoded = jwt.verify(token, "para o sucesso, basta apenas começar")
+      const user = await User.findById(decoded.id)
+
+      if (!user) {
+        return res.status(401).json({ message: "Usuário não encontrado." })
+      }
+
+      return res.status(200).json({ message: "Token válido.", userId: decoded.id })
+    } catch (error) {
+      return res.status(401).json({ message: "Token inválido." })
     }
   }
 }
