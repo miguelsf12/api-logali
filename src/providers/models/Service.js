@@ -16,6 +16,7 @@ const ServiceSchema = new Schema({
     required: true,
   },
   location: {
+    showLocation: { type: Boolean }, // Mostra ou não o endereço
     address: { type: String, required: true }, // Mantém o endereço
     type: {
       type: String,
@@ -26,6 +27,10 @@ const ServiceSchema = new Schema({
       type: [Number], // Array: [longitude, latitude]
       required: true,
     },
+  },
+  images: {
+    type: [String],
+    required: true,
   },
   provider: {
     type: Object,
