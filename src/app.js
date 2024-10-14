@@ -1,21 +1,20 @@
 require("dotenv").config()
-
-const express = require("express")
-
-const app = express()
-const swaggerUi = require("swagger-ui-express")
-const swaggerDocument = require("../swagger.json")
-
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-
 const authRoutes = require("./auth/routes/authRoutes")
 const providerRoutes = require("./providers/routes/providerRoutes")
 const clientRoutes = require("./client/routes/clientRoutes")
 const serviceRoutes = require("./service/routes/serviceRoutes")
 
-app.use(express.json())
+const express = require("express")
+const cors = require("cors")
+const swaggerUi = require("swagger-ui-express")
+const swaggerDocument = require("../swagger.json")
 
+const app = express()
+
+app.use(cors())
+app.use(express.json())
 app.use(express.static("public"))
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Rotas
 app.use("/user/auth", authRoutes)
