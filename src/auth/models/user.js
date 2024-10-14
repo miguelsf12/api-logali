@@ -3,6 +3,10 @@ const mongoose = require("../../db/conn")
 const { Schema } = mongoose
 
 const UserSchema = new Schema({
+  provider: {
+    type: Boolean,
+    default: false,
+  },
   name: {
     type: String,
     required: true,
