@@ -1,4 +1,6 @@
 const client = require("../../db/redis")
+const getToken = require("../../helpers/get-token")
+const getUserByToken = require("../../helpers/get-user-by-token")
 const Service = require("../../providers/models/Service")
 const RoutesToService = require("../../services/RoutesToService")
 const ServiceFilter = require("../filters/serviceFilter")
@@ -51,6 +53,30 @@ module.exports = class serviceController {
       console.log(lastLocation)
 
       res.status(200).json(filteredServices)
+    } catch (error) {
+      res.status(400).json({ message: error.message })
+    }
+  }
+
+  static async getServiceById(req, res) {
+    try {
+      const service = await Service.findById(req.params.id)
+
+      res.status(200).json(service)
+    } catch (error) {
+      res.status(400).json({ message: error.message })
+    }
+  }
+
+  static async getMyService(req, res) {
+    try {
+      const token = getToken(req)
+
+      const user = await getUserByToken(token)
+
+      const service = await Service.findOne({ "provider._id": user._id })
+
+      res.status(200).json(service)
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
