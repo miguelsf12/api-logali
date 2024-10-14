@@ -9,25 +9,12 @@ module.exports = class providerController {
     try {
       const token = getToken(req)
       const user = await getUserByToken(token)
-      const { name, description, category, location } = req.body
+
+      const { name, description, category, location, showLocation } = req.body
+
+      const imagePaths = req.files.map((file) => file.path)
 
       const geocodingService = new GeocodingService(process.env.key)
-      var provider = {
-        _id: {
-          $oid: "66d5fd4d93abe83ec1bcc836",
-        },
-        name: "Miguel Santos",
-        email: "teste@teste.com",
-        cpf: "157.033.776-41",
-        __v: 0,
-        telephone: "(31) 998459630",
-        address: {
-          address:
-            "R. Portugal, 28 - Bairro Recanto Verde, Esmeraldas - MG, 32807-334, Brazil",
-          latitude: -19.8235456,
-          longitude: -44.1575547,
-        },
-      }
 
       const address = await geocodingService.getCordinates(location)
 
@@ -39,15 +26,18 @@ module.exports = class providerController {
         type: "Point",
         coordinates: [address.latitude, address.longitude], // longitude, latitude
       }
-      // await pro
+
       const providerServices = new Service({
         name,
         description,
         category,
-        location: geoLocation,
+        location: {showLocation, ...geoLocation},
+        images: imagePaths,
         provider: user,
       })
 
+      user.provider = true
+      await user.save()
       const newProviderServices = await providerServices.save()
 
       res.status(201).json(newProviderServices)
