@@ -8,12 +8,12 @@ const express = require("express")
 const cors = require("cors")
 const swaggerUi = require("swagger-ui-express")
 const swaggerDocument = require("../swagger.json")
-
+const cloudinary = require("cloudinary").v2
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.static("public"))
+app.use("/public", express.static("src/public"))
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Rotas
@@ -21,6 +21,12 @@ app.use("/user/auth", authRoutes)
 app.use("/user/provider", providerRoutes)
 app.use("/user/client", clientRoutes)
 app.use("/user/service", serviceRoutes)
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 if (process.env.NODE_ENV !== "test") {
   // Só inicia o servidor se não for ambiente de teste
