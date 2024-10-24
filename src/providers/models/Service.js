@@ -16,7 +16,6 @@ const ServiceSchema = new Schema({
     required: true,
   },
   location: {
-    showLocation: { type: Boolean }, // Mostra ou não o endereço
     address: { type: String, required: true }, // Mantém o endereço
     type: {
       type: String,
