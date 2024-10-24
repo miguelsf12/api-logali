@@ -10,15 +10,17 @@ module.exports = class providerController {
       const token = getToken(req)
       const user = await getUserByToken(token)
 
-      const { name, description, category, location, showLocation } = req.body
+      await prohibitMoreServices(user)
 
-      const imagePaths = req.files.map((file) => file.path)
+      const { name, description, category, location } = req.body
+      console.log(name)
+
+      const imagePaths = req.files.map((file) => file.filename)
+      console.log(imagePaths)
 
       const geocodingService = new GeocodingService(process.env.key)
 
       const address = await geocodingService.getCordinates(location)
-
-      await prohibitMoreServices(user)
 
       // Formato de localização com endereço e coordenadas
       const geoLocation = {
@@ -31,18 +33,21 @@ module.exports = class providerController {
         name,
         description,
         category,
-        location: {showLocation, ...geoLocation},
+        location: geoLocation,
         images: imagePaths,
         provider: user,
       })
 
+      console.log(providerServices)
+
       user.provider = true
+
       await user.save()
       const newProviderServices = await providerServices.save()
 
       res.status(201).json(newProviderServices)
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message, status: "400" })
     }
   }
 
@@ -67,6 +72,12 @@ module.exports = class providerController {
         if (body[field]) {
           providerService[field] = body[field]
         }
+      }
+
+      if (req.files && req.files.length > 0) {
+        const imagePaths = req.files.map((file) => file.filename)
+        console.log(imagePaths)
+        providerService.images = imagePaths
       }
 
       if (location) {
