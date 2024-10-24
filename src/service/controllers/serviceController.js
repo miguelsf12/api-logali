@@ -50,7 +50,7 @@ module.exports = class serviceController {
         filteredServices = await locationFilter.filterByLocation()
       }
 
-      console.log(lastLocation)
+      // console.log(lastLocation)
 
       res.status(200).json(filteredServices)
     } catch (error) {
