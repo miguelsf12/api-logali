@@ -1039,6 +1039,247 @@
           }
         }
       }
+    },
+    "/user/service/get-routes-to-services": {
+      "get": {
+        "summary": "Resgatar rota para um serviço",
+        "description": "Rota responsável por resgatar caminhos para o serviço.",
+        "tags": ["service"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de rotas para o serviço",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start_address": {
+                        "type": "string",
+                        "example": "Rua Novo Exemplo, 321"
+                      },
+                      "end_address": {
+                        "type": "string",
+                        "example": "Rua Exemplo, 123"
+                      },
+                      "total_distance": {
+                        "type": "string",
+                        "example": "21.0 km"
+                      },
+                      "total_duration": {
+                        "type": "string",
+                        "example": "27 mins"
+                      },
+                      "overview_polyline": {
+                        "type": "object",
+                        "properties": {
+                          "points": {
+                            "type": "string",
+                            "example": "|k~wBb`plGLEJAd@Zt@j@... Encode que define uma rota"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/service/get-service-by-id/:id": {
+      "get": {
+        "summary": "Resgatar serviço com base no ID",
+        "description": "Rota responsável por resgatar um serviço cadastrado pelo seu ID.",
+        "tags": ["service"],
+        "license": {
+          "name": "Licença Interna",
+          "url": ""
+        },
+        "responses": {
+          "200": {
+            "description": "Serviço do ID resgatado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "example": "SpáRio" },
+                    "description": {
+                      "type": "string",
+                      "example": "Lorem impsum dolor..."
+                    },
+                    "category": { "type": "string", "example": "spá" },
+                    "location": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "Rua Exemplo, 123"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": ["Point"],
+                          "example": "Point"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          },
+                          "example": [-46.633309, -23.55052]
+                        }
+                      }
+                    },
+                    "provider": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@example.com"
+                        },
+                        "cpf": {
+                          "type": "string",
+                          "example": "123.456.789-00"
+                        },
+                        "address": {
+                          "type": "object",
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "example": "Rua Exemplo, 123"
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": ["Point"],
+                              "example": "Point"
+                            },
+                            "coordinates": {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "example": [-46.633309, -23.55052]
+                            },
+                            "_id": { "type": "string", "example": "66ec78d6..." },
+                            "__v": { "type": "number", "example": 0 }
+                          }
+                        }
+                      }
+                    },
+                    "_id": { "type": "string", "example": "66e321d6..." },
+                    "__v": { "type": "number", "example": 0 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/service/get-my-service": {
+      "get": {
+        "summary": "Resgatar serviço do usuário online.",
+        "description": "Rota responsável por resgatar o serviço do usuário online.",
+        "tags": ["service"],
+        "license": {
+          "name": "Licença Interna",
+          "url": ""
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "example": "SpáRio" },
+                    "description": {
+                      "type": "string",
+                      "example": "Lorem impsum dolor..."
+                    },
+                    "category": { "type": "string", "example": "spá" },
+                    "location": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "Rua Exemplo, 123"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": ["Point"],
+                          "example": "Point"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          },
+                          "example": [-46.633309, -23.55052]
+                        }
+                      }
+                    },
+                    "provider": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@example.com"
+                        },
+                        "cpf": {
+                          "type": "string",
+                          "example": "123.456.789-00"
+                        },
+                        "address": {
+                          "type": "object",
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "example": "Rua Exemplo, 123"
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": ["Point"],
+                              "example": "Point"
+                            },
+                            "coordinates": {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              },
+                              "example": [-46.633309, -23.55052]
+                            },
+                            "_id": { "type": "string", "example": "66ec78d6..." },
+                            "__v": { "type": "number", "example": 0 }
+                          }
+                        }
+                      }
+                    },
+                    "_id": { "type": "string", "example": "66e321d6..." },
+                    "__v": { "type": "number", "example": 0 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
