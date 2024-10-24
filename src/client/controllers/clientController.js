@@ -82,7 +82,6 @@ module.exports = class clientController {
   static async sendActualLocation(req, res) {
     try {
       const { address } = req.body.address
-      console.log(address)
 
       const geocodingService = new GeocodingService(process.env.key)
 
@@ -93,7 +92,6 @@ module.exports = class clientController {
       const getLocation = await client.get("lastLocation")
 
       const lastLocation = JSON.parse(getLocation)
-
       res.status(200).json(lastLocation)
     } catch (error) {
       res.status(400).json({ message: error.message, status: "400" })
