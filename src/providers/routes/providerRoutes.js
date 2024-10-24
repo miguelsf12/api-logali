@@ -6,11 +6,16 @@ const router = require("express").Router()
 
 router.post(
   "/addservice",
-  upload.array("images"),
+  upload.array("images", 3),
   checkAuth,
   providerController.addService
 )
-router.patch("/editservice/:id", checkAuth, providerController.editService)
+router.patch(
+  "/editservice/:id",
+  upload.array("images", 3),
+  checkAuth,
+  providerController.editService
+)
 router.delete("/removeservice/:id", checkAuth, providerController.removeService)
 
 module.exports = router
