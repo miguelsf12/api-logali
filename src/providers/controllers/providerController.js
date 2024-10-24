@@ -2,6 +2,7 @@ const getToken = require("../../helpers/get-token")
 const getUserByToken = require("../../helpers/get-user-by-token")
 const GeocodingService = require("../../services/GeocodingService")
 const prohibitMoreServices = require("../../validators/prohibit-more-services")
+const cloudinary = require("cloudinary").v2
 const Service = require("../models/Service")
 
 module.exports = class providerController {
@@ -13,13 +14,18 @@ module.exports = class providerController {
       await prohibitMoreServices(user)
 
       const { name, description, category, location } = req.body
-      console.log(name)
 
-      const imagePaths = req.files.map((file) => file.filename)
-      console.log(imagePaths)
+      const imagePaths = []
+
+      for (const file of req.files) {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "service_images",
+          use_filename: true,
+        })
+        imagePaths.push(result.secure_url)
+      }
 
       const geocodingService = new GeocodingService(process.env.key)
-
       const address = await geocodingService.getCordinates(location)
 
       // Formato de localização com endereço e coordenadas
@@ -74,9 +80,25 @@ module.exports = class providerController {
         }
       }
 
+      // Se houver imagens novas, fazer upload para o Cloudinary
       if (req.files && req.files.length > 0) {
-        const imagePaths = req.files.map((file) => file.filename)
-        console.log(imagePaths)
+        // Deletar as imagens antigas do Cloudinary usando o public_id
+        for (const imageUrl of providerService.images) {
+          // Extrair o public_id da URL
+          const publicId = imageUrl.split("/").slice(-2).join("/").split(".")[0]
+          await cloudinary.uploader.destroy(publicId) // Deletando a imagem antiga
+        }
+
+        // Fazer upload das novas imagens para o Cloudinary
+        const imagePaths = []
+        for (const file of req.files) {
+          const result = await cloudinary.uploader.upload(file.path, {
+            folder: "service_images",
+            use_filename: true,
+          })
+          imagePaths.push(result.secure_url)
+        }
+
         providerService.images = imagePaths
       }
 
