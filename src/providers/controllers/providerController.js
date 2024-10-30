@@ -122,7 +122,7 @@ module.exports = class providerController {
         newService: providerService,
       })
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message, status: "400" })
     }
   }
 
