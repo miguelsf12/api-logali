@@ -1,8 +1,8 @@
 const MissingParamError = require("../errors/missing-param-error")
 
-const checkMissingParams = (user, userMock) => {
-  for (let field in userMock) {
-    if (!user[field]) {
+const checkMissingParams = (objReal, objMock) => {
+  for (let field in objMock) {
+    if (!objReal[field]) {
       throw new MissingParamError(field)
     }
   }
