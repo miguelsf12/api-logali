@@ -126,4 +126,35 @@ module.exports = class userController {
       return res.status(401).json({ message: "Token inválido." })
     }
   }
+
+  static async changePassword(req, res) {
+    try {
+      const { cpf, password, passwordConfirm } = req.body
+
+      const fieldReq = {
+        cpf: "",
+        password: "",
+        passwordConfirm: "",
+      }
+      checkMissingParams({ cpf, password, passwordConfirm }, fieldReq)
+
+      if (password !== passwordConfirm) {
+        return res.status(400).json({ message: "As senhas não coincidem", status: "400" })
+      }
+
+      const user = await User.findOne({ cpf: cpfFormat(cpf) })
+
+      await passwordValidator(password)
+
+      const newPasswordHash = await bcrypt.hash(password, 12)
+
+      user.password = newPasswordHash
+
+      await user.save()
+
+      return res.status(200).json({ message: "Senha alterada com sucesso!" })
+    } catch (error) {
+      res.status(400).json({ message: error.message, status: "400" })
+    }
+  }
 }
