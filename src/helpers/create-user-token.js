@@ -1,14 +1,12 @@
 const jwt = require("jsonwebtoken")
 
 const createUserToken = (user, req, res) => {
-  const expiresIn = "10m"
   const token = jwt.sign(
     {
       name: user.name,
       id: user._id,
     },
-    "para o sucesso, basta apenas começar",
-    { expiresIn }
+    "para o sucesso, basta apenas começar"
   )
 
   res.status(200).json({
