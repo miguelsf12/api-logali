@@ -136,6 +136,7 @@ module.exports = class userController {
         password: "",
         passwordConfirm: "",
       }
+
       checkMissingParams({ cpf, password, passwordConfirm }, fieldReq)
 
       if (password !== passwordConfirm) {
