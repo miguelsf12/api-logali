@@ -11,12 +11,14 @@ const cpfFormat = require("../../helpers/cpf-format")
 const checkPassword = require("../../helpers/check-password")
 const createUserToken = require("../../helpers/create-user-token")
 const GeocodingService = require("../../services/GeocodingService")
+const getToken = require("../../helpers/get-token")
+const jwt = require("jsonwebtoken")
 
 module.exports = class userController {
   static async register(req, res) {
     // Resgate da requisição
     // const { name, email, cpf, password, address } = req.body
-    const { name, email, cpf, password, address } = req.body.formData
+    const { name, email, cpf, password, address } = req.body
 
     try {
       // Usuario comparador
@@ -65,13 +67,13 @@ module.exports = class userController {
       const newUser = await userReady.save()
       res.status(201).json(newUser)
     } catch (error) {
-      res.status(400).json({ message: error.message, status: "400" })
+      res.status(400).json({ message: error.message, status: 400 })
     }
   }
 
   static async login(req, res) {
-    const { password } = req.body.formData
-    let { identifier } = req.body.formData
+    const { password } = req.body
+    let { identifier } = req.body
 
     try {
       const userMock = {
@@ -102,20 +104,21 @@ module.exports = class userController {
 
       createUserToken(userDb, req, res)
     } catch (error) {
-      res.status(400).json({ message: error.message, status: "400" })
+      res.status(400).json({ message: error.message, status: 400 })
     }
   }
 
   static async checkAuth(req, res) {
     try {
-      const token = req.headers["authorization"]
+      const token = getToken(req)
 
       if (!token) {
         return res.status(401).json({ message: "Token não fornecido." })
       }
 
       const decoded = jwt.verify(token, "para o sucesso, basta apenas começar")
-      const user = await User.findById(decoded.id)
+
+      const user = await User.findById(decoded.id).select("-cpf -password")
 
       if (!user) {
         return res.status(401).json({ message: "Usuário não encontrado." })
@@ -123,6 +126,7 @@ module.exports = class userController {
 
       return res.status(200).json({ message: "Token válido.", userId: decoded.id })
     } catch (error) {
+      console.error(error)
       return res.status(401).json({ message: "Token inválido." })
     }
   }
@@ -140,7 +144,7 @@ module.exports = class userController {
       checkMissingParams({ cpf, password, passwordConfirm }, fieldReq)
 
       if (password !== passwordConfirm) {
-        return res.status(400).json({ message: "As senhas não coincidem", status: "400" })
+        return res.status(400).json({ message: "As senhas não coincidem", status: 400 })
       }
 
       const user = await User.findOne({ cpf: cpfFormat(cpf) })
@@ -155,7 +159,7 @@ module.exports = class userController {
 
       return res.status(200).json({ message: "Senha alterada com sucesso!" })
     } catch (error) {
-      res.status(400).json({ message: error.message, status: "400" })
+      res.status(400).json({ message: error.message, status: 400 })
     }
   }
 }
