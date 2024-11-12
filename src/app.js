@@ -6,15 +6,12 @@ const serviceRoutes = require("./service/routes/serviceRoutes")
 
 const express = require("express")
 const cors = require("cors")
-const swaggerUi = require("swagger-ui-express")
-const swaggerDocument = require("../swagger.json")
 const cloudinary = require("cloudinary").v2
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use("/public", express.static("src/public"))
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Rotas
 app.use("/user/auth", authRoutes)
