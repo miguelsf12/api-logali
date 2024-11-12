@@ -57,11 +57,8 @@ module.exports = class clientController {
       if (imageUser) {
         // Deletar as imagens antigas do Cloudinary usando o public_id
         if (userOn.image) {
-          // for (const imageUrl of userOn.image) {
-            // Extrair o public_id da URL
-            const publicId = userOn.image.split("/").slice(-2).join("/").split(".")[0]
-            await cloudinary.uploader.destroy(publicId)
-          // }
+          const publicId = userOn.image.split("/").slice(-2).join("/").split(".")[0]
+          await cloudinary.uploader.destroy(publicId)
         }
 
         // Fazer upload da nova imagem para o Cloudinary
@@ -101,7 +98,7 @@ module.exports = class clientController {
 
   static async sendActualLocation(req, res) {
     try {
-      const { address } = req.body.address
+      const { address } = req.body
 
       const geocodingService = new GeocodingService(process.env.key)
 
@@ -114,7 +111,7 @@ module.exports = class clientController {
       const lastLocation = JSON.parse(getLocation)
       res.status(200).json(lastLocation)
     } catch (error) {
-      res.status(400).json({ message: error.message, status: "400" })
+      res.status(400).json({ message: error.message, status: 400 })
     }
   }
 }
