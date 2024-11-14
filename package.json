@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/app.js localhost 3000",
-    "start": "cross-env NODE_ENV=production node ./src/app.js localhost 3000",
+    "startdev": "cross-env NODE_ENV=production node ./src/app.js localhost 3000",
+    "start": "node ./src/app.js",
     "test": "cross-env NODE_ENV=test jest --verbose --onlyChanged --watch --config=jest.config.js",
     "format": "prettier --write \"src/**/*.js\""
   },
