@@ -1,4 +1,3 @@
-const User = require("../../auth/models/User")
 const getUserByToken = require("../../helpers/get-user-by-token")
 const getToken = require("../../helpers/get-token")
 const MissingParamError = require("../../errors/missing-param-error")
@@ -6,7 +5,6 @@ const GeocodingService = require("../../services/GeocodingService")
 const client = require("../../db/redis")
 const cloudinary = require("cloudinary").v2
 const UnauthorizedError = require("../../errors/unauthorized-error")
-const Service = require("../../providers/models/Service")
 
 module.exports = class clientController {
   static async getUserProfile(req, res) {
