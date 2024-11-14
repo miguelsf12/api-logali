@@ -25,10 +25,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-if (process.env.NODE_ENV !== "test") {
-  // Só inicia o servidor se não for ambiente de teste
-  const PORT = process.env.PORT || 3000
-  app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`)
-  })
-}
+// if (process.env.NODE_ENV !== "test") {
+// Só inicia o servidor se não for ambiente de teste
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`)
+})
+// }
