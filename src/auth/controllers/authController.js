@@ -1,6 +1,6 @@
-const User = require("../models/User")
 const validator = require("validator")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const checkMissingParams = require("../../validators/check-missing-params")
 const signupInvalidParams = require("../../validators/signup/signup-invalid-params")
 const passwordValidator = require("../../validators/password-validator")
@@ -12,7 +12,7 @@ const checkPassword = require("../../helpers/check-password")
 const createUserToken = require("../../helpers/create-user-token")
 const GeocodingService = require("../../services/GeocodingService")
 const getToken = require("../../helpers/get-token")
-const jwt = require("jsonwebtoken")
+const User = require("../models/User")
 
 module.exports = class userController {
   static async register(req, res) {
