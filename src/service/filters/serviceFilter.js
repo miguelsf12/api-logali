@@ -19,7 +19,7 @@ class ServiceFilter {
       query.name = new RegExp(this.filters.name, "i")
     }
 
-    return await Service.find(query)
+    return await Service.find(query).select('-provider.cpf')
   }
 
   async filterByLocation() {
@@ -41,7 +41,7 @@ class ServiceFilter {
           $centerSphere: [[lat, lng], radiusInMeters / 6378100], // Raio da Terra em metros
         },
       },
-    })
+    }).select('-provider.cpf')
   }
 }
 

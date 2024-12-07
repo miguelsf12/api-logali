@@ -7,7 +7,7 @@ const ServiceFilter = require("../filters/serviceFilter")
 
 module.exports = class serviceController {
   static async getAllServices(req, res) {
-    const services = await Service.find()
+    const services = await Service.find().select('-provider.cpf')
 
     res.status(200).json(services)
   }
@@ -60,7 +60,7 @@ module.exports = class serviceController {
 
   static async getServiceById(req, res) {
     try {
-      const service = await Service.findById(req.params.id)
+      const service = await Service.findById(req.params.id).select('-provider.cpf')
 
       res.status(200).json(service)
     } catch (error) {
@@ -74,7 +74,7 @@ module.exports = class serviceController {
 
       const user = await getUserByToken(token)
 
-      const service = await Service.findOne({ "provider._id": user._id })
+      const service = await Service.findOne({ "provider._id": user._id }).select('-provider.cpf')
 
       res.status(200).json(service)
     } catch (error) {
@@ -84,7 +84,7 @@ module.exports = class serviceController {
 
   static async getRoutesToServices(req, res) {
     try {
-      const service = await Service.findById(req.params.id)
+      const service = await Service.findById(req.params.id).select('-provider.cpf')
 
       const routesToService = new RoutesToService(process.env.key)
 
