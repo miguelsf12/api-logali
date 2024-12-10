@@ -7,19 +7,49 @@ class ServiceFilter {
   }
 
   async filter() {
-    const query = {}
+    const excludedWords = [
+      "de",
+      "no",
+      "na",
+      "do",
+      "da",
+      "a",
+      "e",
+      "para",
+      "com",
+      "em",
+      "por",
+    ]
+    const query = {} // Inicializa o objeto da query
 
-    // Adiciona o filtro de categoria se estiver presente
+    // Adiciona o filtro de categoria
     if (this.filters.category) {
       query.category = new RegExp(this.filters.category, "i")
     }
 
-    // Adiciona o filtro de nome se estiver presente
+    // Filtro por nome e descrição
     if (this.filters.name) {
-      query.name = new RegExp(this.filters.name, "i")
+      // Divide o nome em palavras, excluindo preposições e palavras irrelevantes
+      const terms = this.filters.name
+        .split(/\s+/)
+        .filter((term) => !excludedWords.includes(term.toLowerCase())) // Filtra palavras indesejadas
+
+      // Adiciona os filtros apenas com palavras relevantes
+      if (terms.length > 0) {
+        const nameOrDescriptionFilters = terms.map((term) => ({
+          $or: [
+            { name: new RegExp(term, "i") }, // Busca no nome
+            { description: new RegExp(term, "i") }, // Busca na descrição
+          ],
+        }))
+
+        // Inicializa query.$or se necessário e adiciona os filtros
+        if (!query.$or) query.$or = []
+        query.$or.push(...nameOrDescriptionFilters)
+      }
     }
 
-    return await Service.find(query).select('-provider.cpf')
+    return await Service.find(query).select("-provider.cpf")
   }
 
   async filterByLocation() {
@@ -41,7 +71,7 @@ class ServiceFilter {
           $centerSphere: [[lat, lng], radiusInMeters / 6378100], // Raio da Terra em metros
         },
       },
-    }).select('-provider.cpf')
+    }).select("-provider.cpf")
   }
 }
 
