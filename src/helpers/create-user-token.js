@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 
 const createUserToken = (user, req, res) => {
-  const expiresIn = "10m"
+  const expiresIn = "30m"
   const token = jwt.sign(
     {
       name: user.name,
