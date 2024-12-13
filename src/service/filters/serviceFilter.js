@@ -19,12 +19,13 @@ class ServiceFilter {
       "com",
       "em",
       "por",
+      " ",
     ]
-    const query = {} // Inicializa o objeto da query
+    const query = {}
 
     // Adiciona o filtro de categoria
     if (this.filters.category) {
-      query.category = new RegExp(this.filters.category, "i")
+      query.category = new RegExp(this.filters.category.trim(), "i")
     }
 
     // Filtro por nome e descrição
@@ -32,7 +33,8 @@ class ServiceFilter {
       // Divide o nome em palavras, excluindo preposições e palavras irrelevantes
       const terms = this.filters.name
         .split(/\s+/)
-        .filter((term) => !excludedWords.includes(term.toLowerCase())) // Filtra palavras indesejadas
+        .map((term) => term.trim()) // Remove espaços extras
+        .filter((term) => !excludedWords.includes(term.toLowerCase()) && term !== "") // Filtra palavras indesejadas
 
       // Adiciona os filtros apenas com palavras relevantes
       if (terms.length > 0) {
