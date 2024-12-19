@@ -7,28 +7,11 @@ const serviceRoutes = require("./service/routes/serviceRoutes")
 const express = require("express")
 const cors = require("cors")
 const cloudinary = require("cloudinary").v2
-const { rateLimit } = require("express-rate-limit")
-const client = require("./db/redis")
-const { RedisStore } = require("rate-limit-redis")
 const app = express()
-
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 100,
-  message: "Muitas requisições. Por favor, tente novamente em 15 minutos.",
-  standardHeaders: "draft-8",
-  legacyHeaders: false,
-  store: new RedisStore({
-    sendCommand: (...args) => client.sendCommand(args),
-  }),
-})
-
-app.set('trust proxy', 1)
 
 app.use(cors())
 app.use(express.json())
 app.use("/public", express.static("src/public"))
-app.use(globalLimiter)
 
 // Rotas
 app.use("/user/auth", authRoutes)
