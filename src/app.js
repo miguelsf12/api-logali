@@ -23,6 +23,8 @@ const globalLimiter = rateLimit({
   }),
 })
 
+app.set('trust proxy', true)
+
 app.use(cors())
 app.use(express.json())
 app.use("/public", express.static("src/public"))
