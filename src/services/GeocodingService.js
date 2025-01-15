@@ -32,22 +32,6 @@ class GeocodingService {
       throw new Error("Erro ao acessar o serviço de geocodificação.")
     }
   }
-
-  // Verifica se um endereço é valido
-  async isValidAddress(address) {
-    const encodedAddress = encodeURIComponent(address)
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.apiKey}`
-
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-
-      return data.results && data.results.length > 0
-    } catch (error) {
-      console.error("Erro ao verificar o endereço:", error)
-      return false
-    }
-  }
 }
 
 module.exports = GeocodingService

@@ -39,19 +39,4 @@ describe("Locations Service", () => {
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
     )
   })
-
-  test("Deve retornar false para um endereço inválido", async () => {
-    // Mocka o fetch para retornar sem resultados
-    global.fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ results: [] }),
-      })
-    )
-
-    const address = "endereço inexistente"
-
-    const isValid = await geocodingService.isValidAddress(address)
-
-    expect(isValid).toBe(false)
-  })
 })
