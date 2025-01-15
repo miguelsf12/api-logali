@@ -25,7 +25,7 @@ class GeocodingService {
           longitude: lng,
         }
       } else {
-        throw new InvalidParamError("Endereço não encontrado.")
+        throw new InvalidParamError("Endereço inválido.")
       }
     } catch (error) {
       console.error("Erro ao buscar coordenadas:", error)
