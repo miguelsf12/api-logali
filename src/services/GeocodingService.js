@@ -5,7 +5,9 @@ class GeocodingService {
     this.apiKey = apiKey
   }
 
+  // Metodo que retorna coordenadas
   async getCordinates(address) {
+    // Codifica o endereço para URL
     const encodedAddress = encodeURIComponent(address)
 
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.apiKey}`
@@ -31,6 +33,7 @@ class GeocodingService {
     }
   }
 
+  // Verifica se um endereço é valido
   async isValidAddress(address) {
     const encodedAddress = encodeURIComponent(address)
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.apiKey}`

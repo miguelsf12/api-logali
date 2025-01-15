@@ -17,7 +17,6 @@ const User = require("../models/User")
 module.exports = class userController {
   static async register(req, res) {
     // Resgate da requisição
-    // const { name, email, cpf, password, address } = req.body
     const { name, email, cpf, password, address } = req.body
 
     try {
@@ -39,6 +38,7 @@ module.exports = class userController {
       }
 
       checkMissingParams(user, userMock)
+
       await signupInvalidParams(user)
       await passwordValidator(user.password)
       await cpfValidator(user.cpf)
@@ -46,6 +46,7 @@ module.exports = class userController {
 
       const ph = await bcrypt.hash(user.password, 12)
 
+      // Serviço resposável por transformar o endereço em coordenadas
       const geocodingService = new GeocodingService(process.env.key)
       const userAddress = await geocodingService.getCordinates(address)
 
