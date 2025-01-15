@@ -8,7 +8,7 @@ const getUserByToken = async (token) => {
     return res.status(401).json(new UnauthorizedError())
   }
 
-  const decoded = jwt.verify(token, "para o sucesso, basta apenas começar")
+  const decoded = jwt.verify(token, process.env.secretKey)
 
   const userId = decoded.id
 

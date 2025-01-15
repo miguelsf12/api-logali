@@ -7,7 +7,7 @@ const createUserToken = (user, req, res) => {
       name: user.name,
       id: user._id,
     },
-    "para o sucesso, basta apenas começar",
+    process.env.secretKey,
     { expiresIn }
   )
 

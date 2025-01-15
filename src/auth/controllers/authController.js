@@ -82,6 +82,7 @@ module.exports = class userController {
         password: "",
       }
 
+      // Verifica se o login foi feito por CPF ou EMAIL
       if (!validator.isEmail(identifier)) {
         identifier = cpfFormat(identifier)
         await cpfValidator(identifier)
@@ -97,10 +98,12 @@ module.exports = class userController {
       checkMissingParams(user, userMock)
       await loginInvalidParams(user.id)
 
+      // Resgate de usuário do DB
       const userDb = await User.findOne({
         $or: [{ email: identifier }, { cpf: identifier }],
       })
 
+      // Comparação de senhas
       await checkPassword(user.password, userDb.password)
 
       createUserToken(userDb, req, res)
@@ -117,7 +120,7 @@ module.exports = class userController {
         return res.status(401).json({ message: "Token não fornecido." })
       }
 
-      const decoded = jwt.verify(token, "para o sucesso, basta apenas começar")
+      const decoded = jwt.verify(token, process.env.secretKey)
 
       const user = await User.findById(decoded.id).select("-cpf -password")
 

@@ -14,7 +14,7 @@ const checkAuth = (req, res, next) => {
   }
 
   try {
-    const verified = jwt.verify(token, "para o sucesso, basta apenas começar")
+    const verified = jwt.verify(token, process.env.secretKey)
     req.user = verified
     next()
   } catch (err) {
