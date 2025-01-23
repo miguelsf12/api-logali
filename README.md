@@ -86,4 +86,5 @@ A API do Logali utiliza o Node.js com Express e armazena dados no banco de dados
 - **Gerenciamento de Imagens**: Cloudinary
 - **Cache**: Redis
 
-## Instalação
+## DOC
+ - **https://documenter.getpostman.com/view/30067251/2sAY51A1A5**
