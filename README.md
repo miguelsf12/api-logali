@@ -87,4 +87,4 @@ A API do Logali utiliza o Node.js com Express e armazena dados no banco de dados
 - **Cache**: Redis
 
 ## DOC
- - **https://logali.apidocumentation.com/version-10/reference**
+ - **https://documenter.getpostman.com/view/30067251/2sAY51A1A5**
