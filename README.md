@@ -56,8 +56,8 @@ A API do Logali utiliza o Node.js com Express e armazena dados no banco de dados
 - `POST /user/auth/login` - Login de usuários e geração de tokens JWT.
 
 ### Gerenciamento de Usuários
-- `GET /user/profile` - Retorna o perfil do usuário autenticado.
-- `PATCH /user/profile/edit` - Permite a edição dos dados do usuário.
+- `GET /user/client/get-user-profile` - Retorna o perfil do usuário autenticado.
+- `PATCH /user/client/edit/:id` - Permite a edição dos dados do usuário.
 
 ### Gerenciamento de Serviços
 - `POST /user/provider/addservice` - Adiciona um novo serviço (apenas para usuários com provider: true).
@@ -67,8 +67,8 @@ A API do Logali utiliza o Node.js com Express e armazena dados no banco de dados
 - `GET /user/service/get-services-filtered` - Retorna serviços com base em filtros como category, name, e radius.
 
 ### Geolocalização
-- `POST /user/location/send-actual-location` - Envia a localização atual do usuário e retorna o endereço formatado.
-- `GET /user/service/get-route/:id` - Retorna a rota entre a localização atual do cliente e o serviço especificado.
+- `POST /user/client/send-actual-location` - Envia a localização atual do usuário e retorna o endereço formatado.
+- `GET /user/service/get-routes-to-service/:id` - Retorna a rota entre a localização atual do cliente e o serviço especificado.
 
 ## Detalhes Técnicos
 
