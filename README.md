@@ -1,6 +1,6 @@
-# API do Logali
+# API Logali
 
-A API do Logali é projetada para suportar um sistema de cadastro, busca e gerenciamento de serviços, com funcionalidades voltadas tanto para prestadores quanto para clientes.
+A API Logali é projetada para suportar um sistema de cadastro, busca e gerenciamento de serviços, com funcionalidades voltadas tanto para prestadores quanto para clientes.
 
 ## Índice
 
