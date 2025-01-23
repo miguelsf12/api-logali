@@ -70,14 +70,9 @@ A API do Logali utiliza o Node.js com Express e armazena dados no banco de dados
 - `POST /user/location/send-actual-location` - Envia a localização atual do usuário e retorna o endereço formatado.
 - `GET /user/service/get-route/:id` - Retorna a rota entre a localização atual do cliente e o serviço especificado.
 
-### Avaliações e Favoritos
-- `POST /user/service/:id/rate` - Permite ao usuário avaliar um serviço.
-- `POST /user/service/:id/favorite` - Adiciona um serviço à lista de favoritos do usuário.
-- `GET /user/favorites` - Lista todos os serviços favoritos do usuário.
-
 ## Detalhes Técnicos
 
-- **Banco de Dados**: MongoDB (armazenamento de informações de usuários, serviços e avaliações).
+- **Banco de Dados**: MongoDB (armazenamento de informações de usuários e serviços).
 - **Gerenciamento de Imagens**: Uploads realizados no Cloudinary.
 - **Cache**: Redis para otimizar requisições frequentes.
 - **APIs Externas**: Integração com Google Cloud (Geocoding e Directions APIs).
